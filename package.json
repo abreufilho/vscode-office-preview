@@ -1,0 +1,141 @@
+{
+  "name": "office-preview",
+  "displayName": "Office Preview",
+  "description": "Word and PowerPoint viewer powered by locally bundled renderers.",
+  "version": "1.0.0",
+  "publisher": "abreufilho",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Antonio Abreu Filho",
+    "url": "https://abreufilho.com.br"
+  },
+  "icon": "assets/icon.png",
+  "galleryBanner": {
+    "color": "#3b0764",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abreufilho/vscode-office-preview"
+  },
+  "homepage": "https://github.com/abreufilho/vscode-office-preview",
+  "bugs": {
+    "url": "https://github.com/abreufilho/vscode-office-preview/issues"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Visualization"
+  ],
+  "keywords": [
+    "docx",
+    "pptx",
+    "word",
+    "powerpoint",
+    "viewer",
+    "offline"
+  ],
+  "activationEvents": [
+    "onCustomEditor:office-preview.docxEditor",
+    "onCustomEditor:office-preview.pptxEditor",
+    "onCommand:officePreview.openDocx",
+    "onCommand:officePreview.openPptx"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "officePreview.openDocx",
+        "title": "Word: Open Preview",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "officePreview.openPptx",
+        "title": "PowerPoint: Open Preview",
+        "icon": "$(open-preview)"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "office-preview.docxEditor",
+        "displayName": "Word Preview",
+        "selector": [
+          {
+            "filenamePattern": "*.docx"
+          }
+        ],
+        "priority": "default"
+      },
+      {
+        "viewType": "office-preview.pptxEditor",
+        "displayName": "PowerPoint Preview",
+        "selector": [
+          {
+            "filenamePattern": "*.pptx"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "officePreview.openDocx",
+          "when": "resourceExtname == .docx",
+          "group": "navigation"
+        },
+        {
+          "command": "officePreview.openPptx",
+          "when": "resourceExtname == .pptx",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "officePreview.openDocx",
+          "when": "resourceExtname == .docx",
+          "group": "navigation"
+        },
+        {
+          "command": "officePreview.openPptx",
+          "when": "resourceExtname == .pptx",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" \"scripts/*.mjs\" \"*.json\"",
+    "test": "npm run typecheck && esbuild test/*.test.ts --bundle --platform=node --format=cjs --outdir=out/test --log-level=warning && node --test out/test/*.test.js",
+    "vscode:prepublish": "npm run build",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "docx-preview": "^0.4.0",
+    "pptx-preview": "^1.0.7",
+    "jszip": "^3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.2",
+    "@types/vscode": "1.80",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.8.0",
+    "globals": "^17.8.0",
+    "prettier": "^3.9.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.65.0"
+  },
+  "overrides": {
+    "encoding-sniffer": "1.0.2",
+    "pptx-preview": {
+      "uuid": "11.1.1"
+    }
+  }
+}
