@@ -116,7 +116,7 @@
     "package": "vsce package"
   },
   "dependencies": {
-    "docx-preview": "^0.4.0",
+    "docx-preview": "^0.4.1",
     "pptx-preview": "^1.0.7",
     "jszip": "^3"
   },
